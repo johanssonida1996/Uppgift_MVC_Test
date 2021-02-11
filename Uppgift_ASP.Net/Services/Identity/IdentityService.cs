@@ -13,6 +13,8 @@ namespace Uppgift_ASP.Net.Services.Identity
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
+     
+
         public IdentityService(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
@@ -33,6 +35,8 @@ namespace Uppgift_ASP.Net.Services.Identity
         {
             return await _userManager.CreateAsync(user, password);
         }
+
+        
 
         public async Task CreateRootAccountAsync()
         {
@@ -56,8 +60,8 @@ namespace Uppgift_ASP.Net.Services.Identity
                     }
 
                     await _userManager.AddToRoleAsync(user, "Admin");
+                    
                 }
-
             }
         }
 

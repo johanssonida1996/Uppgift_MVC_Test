@@ -101,6 +101,8 @@ namespace Uppgift_ASP.Net.Areas.Identity.Pages.Account
             ViewData["roles"] = _roleManager.Roles.ToList();
             //ViewData["classes"] = _context.Classes.ToList();
 
+            // SchoolClass = _context.Classes.ToList();
+
 
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -115,11 +117,14 @@ namespace Uppgift_ASP.Net.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new AppUser {
-                    UserName = Input.Email, 
+                var user = new AppUser
+                {
+                    UserName = Input.Email,
                     Email = Input.Email,
                     FirstName = Input.FirstName,
-                    LastName = Input.LastName
+                    LastName = Input.LastName,
+                    
+                  
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -128,28 +133,23 @@ namespace Uppgift_ASP.Net.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
-                    
-
-                    if(!_roleManager.Roles.Any())
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole("Admin"));
-                        await _roleManager.CreateAsync(new IdentityRole("Teacher"));
-                        await _roleManager.CreateAsync(new IdentityRole("Student"));
-                    }
-
-
-                  
-                    if (_userManager.Users.Count() == 1)
-                        await _userManager.AddToRoleAsync(user, "Admin");
-
-                    else                    
-                        await _userManager.AddToRoleAsync(user, "Teacher");                    
-                    
+                
 
 
 
-                    //await _userManager.AddToRoleAsync(user, "Student");
+                    //        if(!_roleManager.Roles.Any())
+                    //        {
+                    //            await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                    //            await _roleManager.CreateAsync(new IdentityRole("Teacher"));
+                    //            await _roleManager.CreateAsync(new IdentityRole("Student"));
+                    //        }
+
+
+
+                    //if (_userManager.Users.Count() == 1)
+                    //    await _userManager.AddToRoleAsync(user, "Admin");
+
+
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
