@@ -17,6 +17,7 @@ namespace Uppgift_ASP.Net.Models
 
         public virtual ICollection<AppUser> Students { get; set; }        
 
-        //public List<EditClassesViewModel> _schoolClassList { get; set; }
+        
+       //public List<EditClassesViewModel> _schoolClassList { get; set; }
     }
 }
