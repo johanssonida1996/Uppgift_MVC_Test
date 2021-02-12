@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Uppgift_ASP.Net.Data;
@@ -88,9 +89,12 @@ namespace Uppgift_ASP.Net.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
+           
             public string Role { get; set; }
 
             //public string SClass { get; set; }
+
+           
         
         }
 
@@ -98,7 +102,16 @@ namespace Uppgift_ASP.Net.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+
+            //List<SelectListItem> list = new List<SelectListItem>();
+            //foreach (var role in _roleManager.Roles)
+            //  list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
+          
+
+
             ViewData["roles"] = _roleManager.Roles.ToList();
+
+          
             //ViewData["classes"] = _context.Classes.ToList();
 
             // SchoolClass = _context.Classes.ToList();
@@ -113,7 +126,8 @@ namespace Uppgift_ASP.Net.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            var role = _roleManager.FindByNameAsync(Input.Role).Result;
+            //var role = _roleManager.FindByNameAsync(Input.Role).Result;
+            
 
             if (ModelState.IsValid)
             {
@@ -123,17 +137,25 @@ namespace Uppgift_ASP.Net.Areas.Identity.Pages.Account
                     Email = Input.Email,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
-                    
-                  
+                    //Role = Input.Role,
+                    //Classes = Input.Classes
+
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                
 
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-                
+
+                   //await _userManager.AddToRoleAsync(user, Input.Role);
+
+                   
+
+                    //result = await _userManager.AddToRoleAsync(user, Input.Role);
+
 
 
 

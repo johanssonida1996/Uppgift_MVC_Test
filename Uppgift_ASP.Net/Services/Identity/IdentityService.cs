@@ -55,8 +55,9 @@ namespace Uppgift_ASP.Net.Services.Identity
                     if (!_roleManager.Roles.Any())
                     {
                         await _roleManager.CreateAsync(new IdentityRole("Admin"));
-                        await _roleManager.CreateAsync(new IdentityRole("Teacher"));
-                        await _roleManager.CreateAsync(new IdentityRole("Student"));
+                        await _roleManager.CreateAsync(new IdentityRole("User"));
+                        //await _roleManager.CreateAsync(new IdentityRole("Teacher"));
+                        //await _roleManager.CreateAsync(new IdentityRole("Student"));
                     }
 
                     await _userManager.AddToRoleAsync(user, "Admin");

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Uppgift_ASP.Net.Models;
 
 namespace Uppgift_ASP.Net.Data
 {
@@ -19,6 +20,10 @@ namespace Uppgift_ASP.Net.Data
         [PersonalData]
         [Column(TypeName = "nvarchar(50)")]
         public string LastName { get; set; }
+
+        //public IdentityRole Role { get; set; }
+
+        //public SchoolClass Classes { get; set; }
 
         [PersonalData]
         public string DisplayName => $"{FirstName} {LastName}";

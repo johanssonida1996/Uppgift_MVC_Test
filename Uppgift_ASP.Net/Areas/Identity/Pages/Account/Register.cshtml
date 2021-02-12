@@ -18,27 +18,27 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Input.FirstName"></label>
-                <input asp-for="Input.FirstName" class="form-control" />
+                <input asp-for="Input.FirstName" class="form-control" id="FirstName" />
                 <span asp-validation-for="Input.FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Input.LastName"></label>
-                <input asp-for="Input.LastName" class="form-control" />
+                <input asp-for="Input.LastName" class="form-control" id="LastName" />
                 <span asp-validation-for="Input.LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
+                <input asp-for="Input.Email" class="form-control" id="Email" />
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" />
+                <input asp-for="Input.Password" class="form-control" id="Password1" />
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <input asp-for="Input.ConfirmPassword" class="form-control" id="Password2" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -50,14 +50,14 @@
             </div>
 
             @*<div class="form-group">
-                <label asp-for="Input.SClass"></label>
+                    <label asp-for="Input.SClass"></label>
 
-                <select asp-for="Input.SClass" class="form-control" asp-items='new SelectList(classes, "Id")'> </select>
+                    <select asp-for="Input.SClass" class="form-control" asp-items='new SelectList(classes, "Id")'> </select>
 
-                <span asp-validation-for="Input.SClass" class="text-danger"></span>
-            </div>*@
+                    <span asp-validation-for="Input.SClass" class="text-danger"></span>
+                </div>*@
 
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button id="button" type="submit" class="btn btn-primary" disabled="disabled">Register</button>
         </form>
     </div>
     <div class="col-md-6 col-md-offset-2">
@@ -88,10 +88,14 @@
                     </form>
                 }
             }
+
         </section>
     </div>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
 }
