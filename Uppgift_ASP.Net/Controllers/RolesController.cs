@@ -1,19 +1,22 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Uppgift_ASP.Net.Areas.Identity.Pages.Account;
+using Uppgift_ASP.Net.Data;
 
 namespace Uppgift_ASP.Net.Controllers
 {
     public class RolesController : Controller
-    {
+
+    {   
+
         // GET: RolesController
-        public ActionResult Index()
-        {
-            return View();
-        }
+   
 
         // GET: RolesController/Details/5
         public ActionResult Details(int id)
@@ -29,7 +32,7 @@ namespace Uppgift_ASP.Net.Controllers
 
         // POST: RolesController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]            
         public ActionResult Create(IFormCollection collection)
         {
             try

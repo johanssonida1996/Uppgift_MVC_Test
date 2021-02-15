@@ -28,7 +28,9 @@ namespace Uppgift_ASP.Net.Areas.Identity.Pages.Account
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        //private readonly ApplicationDbContext _context;
+        private readonly SchoolClass _schoolClass;
+        private readonly ApplicationDbContext _context;
+       
         
 
 
@@ -37,10 +39,12 @@ namespace Uppgift_ASP.Net.Areas.Identity.Pages.Account
             SignInManager<AppUser> signInManager,
             RoleManager<IdentityRole> roleManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender
-            //ApplicationDbContext context
-           
-                     
+            IEmailSender emailSender,
+            SchoolClass schoolClass,
+            ApplicationDbContext context
+
+
+
             )
           
         {
@@ -49,7 +53,9 @@ namespace Uppgift_ASP.Net.Areas.Identity.Pages.Account
             _roleManager = roleManager;
             _logger = logger;
             _emailSender = emailSender;
-            //_context = context;           
+            _schoolClass = schoolClass;
+            _context = context;
+                 
 
         }
 
@@ -60,8 +66,11 @@ namespace Uppgift_ASP.Net.Areas.Identity.Pages.Account
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
+        public List<SchoolClass> SClasses { get; set; }
+
         public class InputModel
         {
+
             [Required]            
             [DataType(DataType.Text)]
             [Display(Name = "Firstname")]
@@ -90,9 +99,12 @@ namespace Uppgift_ASP.Net.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
            
+           
             public string Role { get; set; }
 
-            //public string SClass { get; set; }
+            public string SClass { get; set; }
+
+           
 
            
         
@@ -106,15 +118,15 @@ namespace Uppgift_ASP.Net.Areas.Identity.Pages.Account
             //List<SelectListItem> list = new List<SelectListItem>();
             //foreach (var role in _roleManager.Roles)
             //  list.Add(new SelectListItem() { Value = role.Name, Text = role.Name });
-          
+
 
 
             ViewData["roles"] = _roleManager.Roles.ToList();
 
-          
-            //ViewData["classes"] = _context.Classes.ToList();
 
-            // SchoolClass = _context.Classes.ToList();
+            //ViewData["classes"] = _schoolClass.Id.ToList();
+
+            SClasses = _context.Classes.ToList();
 
 
             ReturnUrl = returnUrl;
@@ -126,8 +138,13 @@ namespace Uppgift_ASP.Net.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            //var role = _roleManager.FindByNameAsync(Input.Role).Result;
             
+            ViewData["roles"] = _roleManager.Roles.ToList();
+
+            SClasses = _context.Classes.ToList();
+
+            //ViewData["classes"] = _schoolClass.Id.ToList();
+
 
             if (ModelState.IsValid)
             {
@@ -137,13 +154,21 @@ namespace Uppgift_ASP.Net.Areas.Identity.Pages.Account
                     Email = Input.Email,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
-                    //Role = Input.Role,
-                    //Classes = Input.Classes
+                    SClassId = Input.SClass,
 
                 };
 
-                var result = await _userManager.CreateAsync(user, Input.Password);
                 
+
+                var result = await _userManager.CreateAsync(user, Input.Password);
+
+                await _userManager.AddToRoleAsync(user, Input.Role);
+
+               
+
+
+
+
 
 
                 if (result.Succeeded)
@@ -201,6 +226,8 @@ namespace Uppgift_ASP.Net.Areas.Identity.Pages.Account
             }
 
             ViewData["roles"] = _roleManager.Roles.ToList();
+
+            //ViewData["classes"] = _schoolClass.Id.ToList();
 
             // If we got this far, something failed, redisplay form
             return Page();

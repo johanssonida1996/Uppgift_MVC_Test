@@ -25,6 +25,8 @@ namespace Uppgift_ASP.Net.Data
 
         //public SchoolClass Classes { get; set; }
 
+        public string SClassId { get; set; }
+
         [PersonalData]
         public string DisplayName => $"{FirstName} {LastName}";
     }

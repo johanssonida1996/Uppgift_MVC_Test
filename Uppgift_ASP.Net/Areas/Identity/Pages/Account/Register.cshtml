@@ -3,12 +3,11 @@
 @{
     ViewData["Title"] = "Register";
     var roles = (List<IdentityRole>)ViewData["roles"];
-    //var classes = (IEnumerable<SchoolClass>)ViewData["classes"];
+    //var classes = (IEnumerable<SClasses>)ViewData["classes"];
 
 }
 
-
-<h1>@ViewData["Title"]</h1>
+    <h1>@ViewData["Title"]</h1>
 
 <div class="row">
     <div class="col-md-4">
@@ -43,19 +42,20 @@
             </div>
             <div class="form-group">
                 <label asp-for="Input.Role"></label>
-
-                <select asp-for="Input.Role" class="form-control" asp-items='new SelectList(roles, "Id", "Name")'> </select>
-
+                <select asp-for="Input.Role" class="form-control" asp-items='new SelectList(roles, "Name")'> </select>
                 <span asp-validation-for="Input.Role" class="text-danger"></span>
             </div>
 
-            @*<div class="form-group">
+            <div class="form-group">
                     <label asp-for="Input.SClass"></label>
-
-                    <select asp-for="Input.SClass" class="form-control" asp-items='new SelectList(classes, "Id")'> </select>
-
+                    <select asp-for="Input.SClass" class="form-control">
+                        @foreach(var Test in Model.SClasses)
+                        {
+                            <option value="@Test.Id" class="form-control"> @Test.Id </option>
+                        }
+                    </select>
                     <span asp-validation-for="Input.SClass" class="text-danger"></span>
-                </div>*@
+                </div>
 
             <button id="button" type="submit" class="btn btn-primary" disabled="disabled">Register</button>
         </form>
